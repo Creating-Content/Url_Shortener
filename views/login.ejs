@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            /* Same vibrant background as home page */
+            background: linear-gradient(135deg, #f0f9ff 0%, #e2eafc 100%); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        .card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .card h1 {
+            color: #008080; /* Teal Header */
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .card form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .card label {
+            text-align: left;
+            font-weight: 600;
+            margin-bottom: -10px;
+        }
+        .card input[type="text"], .card input[type="password"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .card input[type="text"]:focus, .card input[type="password"]:focus { border-color: #008080; outline: none; }
+
+        .card button[type="submit"] {
+            padding: 12px;
+            background-color: #28a745; /* Green Submit Button */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: background-color 0.2s;
+        }
+        .card button[type="submit"]:hover { background-color: #1e7e34; }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        .error-message {
+            color: #d9534f;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Login</h1>
+        <% if(locals.error) { %>
+            <div class="error-message"><%= error %></div>
+        <% } %>
+        <form action="/user/login" method="post">
+            <label >Email</label>
+            <input type="text" required name="email"/>
+            <label >Password</label>
+            <input type="password" required name="password"/> <button type ="submit">Login</button>
+        </form>
+        <button class="back-btn" onclick="history.back()">← Go Back</button>
+    </div>
+</body>
+</html>
