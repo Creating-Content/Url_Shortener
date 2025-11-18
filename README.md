@@ -136,10 +136,28 @@ The application will:
 
 ### Accessing the Application
 
-- **Home Page**: `http://localhost:8001/`
-- **Login**: `http://localhost:8001/login`
-- **Sign Up**: `http://localhost:8001/signup`
-- **Profile**: `http://localhost:8001/profile`
+- **Local (development)**: `http://localhost:8001/`
+- **Login (local)**: `http://localhost:8001/login`
+- **Sign Up (local)**: `http://localhost:8001/signup`
+- **Profile (local)**: `http://localhost:8001/profile`
+
+### Deployment / Production
+
+- **Hosted On**: AWS EC2 instance
+- **Reverse Proxy**: `nginx` used as a reverse proxy in front of the Node.js app
+- **SSL Certificate**: Obtained and managed with `certbot` (Let's Encrypt) to enable HTTPS
+- **Database**: Connected to a MongoDB cluster (MongoDB Atlas)
+- **Domain Routing**: The project domain/subdomain's A record was pointed to the EC2 public IP
+- **Live URL**: https://www.url-shortener.casacam.net/ (production site)
+
+Notes on the production setup:
+
+- Nginx proxies incoming HTTPS requests on ports 80/443 to the Node.js app running on the EC2 instance (e.g. `http://127.0.0.1:8001`).
+- Certbot was used to request and install a Let's Encrypt certificate for the `www.url-shortener.casacam.net` subdomain and configured automatic renewal.
+- The MongoDB connection string configured in production points to a secure MongoDB cluster; credentials are stored in the server's environment variables (not committed to the repo).
+- DNS was configured so the `www.url-shortener.casacam.net` A record resolves to the EC2 instance's public IP.
+
+If you want, I can add a short `deploy.md` with nginx config snippets and the `certbot` commands used.
 
 ## 🔌 API Endpoints
 
