@@ -1,5 +1,9 @@
 # Short URL Service
 
+<div align="center">
+<img width="1200" height="475" alt="SmartRail Planner" src="./images/page.png" />
+</div>
+
 A modern, secure, and efficient URL shortening service built with Node.js, Express, and MongoDB. This application provides a complete solution for creating, managing, and tracking shortened URLs with user authentication and analytics.
 
 ## 📋 Table of Contents
