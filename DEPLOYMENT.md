@@ -186,11 +186,4 @@ If you prefer running Node directly under systemd, use `pm2 startup` which write
 - Limit SSH access via Security Group rules (allow your IP only to port 22 when possible).
 - Use IAM roles and a secure secret manager for production credentials where possible.
 
----
 
-If you want, I can:
-
-- create an `ecosystem.config.js` in the repo with placeholders and instructions to use it, or
-- produce a ready-to-use `nginx` site file (named `url-shortener`) and a sample `certbot` command customized for `www.url-shortener.casacam.net` (I will use that exact domain only if you confirm).
-
-Feel free to tell me which option you prefer.
