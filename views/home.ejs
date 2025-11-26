@@ -152,8 +152,9 @@
 
     <div class="container">
         <% if(locals.id) { %>
-            <div class="link-generated">
-                <p>URL Generated: <strong>http://localhost:8001/url/<%= id %></strong></p>
+            <div class="link-generated" id="generatedLinkWrap">
+                <p>URL Generated: <strong id="generatedLinkText"><%= BASE_URL %>/url/<%= id %></strong></p>
+                <button id="copyGeneratedBtn" style="margin-left:12px; padding:8px 12px; border-radius:8px; border:none; background:#008080; color:#fff; cursor:pointer; font-weight:700;">Copy</button>
             </div>
         <% } %> 
         
@@ -183,7 +184,10 @@
                         <% urls.forEach((url, index) => { %>
                             <tr>
                                 <td><%= index + 1 %></td>
-                                <td><a href="/url/<%= url.shortId %>" target="_blank" style="color:#008080; text-decoration: none;"><%= url.shortId %></a></td>
+                                <td style="display:flex;align-items:center; gap:8px;">
+                                    <a href="<%= BASE_URL %>/url/<%= url.shortId %>" target="_blank" style="color:#008080; text-decoration: none;"><%= url.shortId %></a>
+                                    <button class="copy-btn" data-shortid="<%= url.shortId %>" style="padding:6px 10px; border-radius:6px; border:none; background:#007b7b; color:#fff; cursor:pointer; font-weight:600;">Copy</button>
+                                </td>
                                 <td><%= url.redirectURL.substring(0, 50) + (url.redirectURL.length > 50 ? '...' : '') %></td>
                                 <td><%= url.visitHistory.length %></td>
                             </tr>
@@ -246,6 +250,35 @@
             alert('An internal server error occurred.');
         }
     });
+
+    // Copy buttons for generated and listed links
+    function setCopyHandlers() {
+        const generatedBtn = document.getElementById('copyGeneratedBtn');
+        if (generatedBtn) {
+            generatedBtn.addEventListener('click', () => {
+                const text = document.getElementById('generatedLinkText').innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    generatedBtn.innerText = 'Copied!';
+                    setTimeout(()=> generatedBtn.innerText = 'Copy', 1500);
+                }).catch(()=> alert('Copy failed. Please copy manually.'));
+            });
+        }
+
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const sid = e.currentTarget.getAttribute('data-shortid');
+                const full = `${'<%= BASE_URL %>'}/url/${sid}`;
+                navigator.clipboard.writeText(full).then(()=>{
+                    const old = btn.innerText;
+                    btn.innerText = 'Copied!';
+                    setTimeout(()=> btn.innerText = old, 1500);
+                }).catch(()=> alert('Copy failed. Please copy manually.'));
+            });
+        });
+    }
+
+    // initialize copy handlers on page load
+    setCopyHandlers();
 </script>
 </body>
 </html>

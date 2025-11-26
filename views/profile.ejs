@@ -117,7 +117,9 @@
         <div class="header-center">
             <h1>Welcome, <%= user.name || user.email %>!</h1>
         </div>
-        <div class="header-right" style="width: 150px;"></div> 
+        <div class="header-right" style="width: 150px; display:flex; justify-content:flex-end; gap:10px; align-items:center;">
+            <a href="/logout" style="text-decoration:none; color:white; background:#d9534f; padding:8px 12px; border-radius:8px; font-weight:700;">Logout</a>
+        </div> 
     </header>
 
     <div class="container">
@@ -141,10 +143,12 @@
                         </tr>
                     </thead>
                     <tbody>
-    <% urls.forEach((url, index) => { %>
+            <% urls.forEach((url, index) => { %>
         <tr>
             <td><%= index + 1 %></td>
-            <td><a href="/url/<%= url.shortId %>" target="_blank" style="color:#001f3f; text-decoration: none;"><%= url.shortId %></a></td>
+            <td style="display:flex;align-items:center; gap:8px;"><a href="<%= BASE_URL %>/url/<%= url.shortId %>" target="_blank" style="color:#001f3f; text-decoration: none;"><%= url.shortId %></a>
+                <button class="copy-btn" data-shortid="<%= url.shortId %>" style="padding:6px 10px; border-radius:6px; border:none; background:#007b7b; color:#fff; cursor:pointer; font-weight:600;">Copy</button>
+            </td>
             <td><%= url.redirectURL.substring(0, 70) + (url.redirectURL.length > 70 ? '...' : '') %></td>
             <td><%= url.visitHistory.length %></td>
             <td><%= new Date(url.createdAt).toLocaleDateString() %></td>
@@ -181,7 +185,7 @@
             let csvContent = "S.No,Short URL,Original URL,Clicks,Created At\n";
 
             urls.forEach((url, index) => {
-                const shortUrl = `"http://localhost:8001/url/${url.shortId}"`;
+                const shortUrl = `${'<%= BASE_URL %>'}/url/${url.shortId}`;
                 const originalUrl = `"${url.redirectURL.replace(/"/g, '""')}"`;
                 const clicks = url.visitHistory.length;
                 const createdAt = new Date(url.createdAt).toLocaleDateString();
@@ -204,6 +208,19 @@
                 document.body.removeChild(link);
             }
         }
+
+        // Copy handlers
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const sid = e.currentTarget.getAttribute('data-shortid');
+                const full = `${'<%= BASE_URL %>'}/url/${sid}`;
+                navigator.clipboard.writeText(full).then(()=>{
+                    const old = btn.innerText;
+                    btn.innerText = 'Copied!';
+                    setTimeout(()=> btn.innerText = old, 1500);
+                }).catch(()=> alert('Copy failed. Please copy manually.'));
+            });
+        });
     </script>
 
 </body>

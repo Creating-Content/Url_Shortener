@@ -10,13 +10,17 @@ const path = require("path");
 
 const URL=require("./models/url");
 
-const app= express();
-const PORT=8001;
+const app = express();
+const PORT = process.env.PORT || 8002;
 
 connectToMongoDB(process.env.MONGODB_URI)
 .then (() =>
 console.log("MongoDB connected!! ")
 );
+
+// Expose a public base URL for templates and client-side code.
+// Set BASE_URL in your environment to the public domain (e.g. https://s-link.giize.com)
+app.locals.BASE_URL = process.env.BASE_URL || `http://localhost:${PORT}`;
 
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
