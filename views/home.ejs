@@ -133,6 +133,57 @@
         .popup-card button:hover:last-of-type { background-color: #ddd; }
         .popup-close { position: absolute; top: 12px; right: 18px; font-size: 28px; cursor: pointer; color: #aaa; transition: color 0.2s; }
         .popup-close:hover { color: #555; }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            .auth-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .container {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+            .shorten-form div {
+                flex-direction: column;
+            }
+            .shorten-form input[type="text"] {
+                border-radius: 8px;
+                margin-bottom: 10px;
+            }
+            .shorten-form button {
+                border-radius: 8px;
+                width: 100%;
+            }
+            .urls-list {
+                overflow-x: auto;
+            }
+            table {
+                min-width: 600px;
+                font-size: 0.9rem;
+            }
+            th, td {
+                padding: 10px 8px;
+                white-space: nowrap;
+            }
+            .popup-card {
+                width: 90%;
+                max-width: 350px;
+                padding: 25px;
+            }
+            .link-generated {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
